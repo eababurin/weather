@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Weather</string>
+    <string name="click_me">Click me!</string>
+    <string name="stop_clicking">stop clicking on me!</string>
 </resources>
