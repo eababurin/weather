@@ -6,6 +6,10 @@ apply plugin: 'kotlin-android'
 android {
     compileSdk 32
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "ru.eababurin.weather"
         minSdk 21

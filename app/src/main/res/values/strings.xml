@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Weather</string>
-    <string name="click_me">Click me!</string>
-    <string name="stop_clicking">stop clicking on me!</string>
+
+    <string name="temperature_label">Температура</string>
+    <string name="feels_like_label">Ощущается как</string>
+    <string name="city_coordinates">lt/ln: %s, %s"</string>
+    <string name="error">Error</string>
+    <string name="reload">Reload</string>
 </resources>
