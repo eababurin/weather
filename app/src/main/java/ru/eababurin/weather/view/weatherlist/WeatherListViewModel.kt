@@ -6,12 +6,11 @@ import ru.eababurin.weather.model.Repository
 import ru.eababurin.weather.model.RepositoryLocalImpl
 import ru.eababurin.weather.model.RepositoryRemoteImpl
 import ru.eababurin.weather.viewmodel.AppState
-import java.lang.IllegalStateException
 
 class WeatherListViewModel(
     private val liveData: MutableLiveData<AppState> = MutableLiveData<AppState>()
 ) : ViewModel() {
-    lateinit var repository: Repository
+    private lateinit var repository: Repository
 
     fun getLiveData(): MutableLiveData<AppState> {
         choiceRepository()
@@ -19,19 +18,20 @@ class WeatherListViewModel(
     }
 
     private fun choiceRepository() {
-        if (isConnection()) {
-            repository = RepositoryRemoteImpl()
-        } else {
-            repository = RepositoryLocalImpl()
-        }
+        repository = if (isConnection())
+            RepositoryRemoteImpl()
+        else
+            RepositoryLocalImpl()
     }
 
     fun sentRequest() {
         liveData.value = AppState.Loading
-        if ((1..10).random() == 1) {
-            liveData.postValue(AppState.Error(throw IllegalStateException("Что-то пошло не так :(")))
+
+        if ((1..2).random() == 1) {
+            liveData.postValue(AppState.Error(throw IllegalStateException("Ошибка загрузки")))
+        } else {
+            liveData.postValue(AppState.Success(repository.getWeather(55.755826, 37.617299)))
         }
-        liveData.postValue(AppState.Success(repository.getWeather(55.755826, 37.617299)))
     }
 
     private fun isConnection(): Boolean {
