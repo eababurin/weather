@@ -8,4 +8,10 @@
     <string name="reload">Reload</string>
     <string name="error_message">Что-то пошло не так :(</string>
 
+    <string name="alert_title">Произошла досадная ошибка!</string>
+    <string name="alert_description">При загрузке данных произошла ошибка. Необходимо перезапустить приложение</string>
+    <string name="alert_button">(╯°□°）╯︵ ┻━┻</string>
+
+    <string name="loading_title">Данные загружаются</string>
+
 </resources>
