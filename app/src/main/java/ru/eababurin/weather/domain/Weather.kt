@@ -1,3 +1,14 @@
 package ru.eababurin.weather.domain
 
-data class Weather(val city: City = getDefaultCity(), val temperature: Int = 30, val feelsLike: Int = 35)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+import ru.eababurin.weather.domain.City
+import ru.eababurin.weather.domain.getDefaultCity
+
+@Parcelize
+data class Weather(
+    val city: City = getDefaultCity(),
+    val temperature: Int = 35,
+    val feelsLike: Int = 43
+) : Parcelable
+

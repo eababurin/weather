@@ -1,154 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/mainView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/mainFragmentRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/weatherListFragmentFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:src="@drawable/ic_russia"
+        app:tint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="56dp" />
+
+    <FrameLayout
+        android:id="@+id/mainFragmentLoadingLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true">
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/main_group"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:constraint_referenced_ids="mainView, cityName, cityCoordinates, temperatureLabel, temperatureValue, feelsLikeLabel, feelsLikeValue" />
-
-        <TextView
-            android:id="@+id/cityName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/city_name_margin_top"
-            android:textSize="35sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="Москва" />
-
-        <TextView
-            android:id="@+id/cityCoordinates"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cityName"
-            tools:text="lt/ln: 55.755826, 37.617299900000035" />
-
-        <TextView
-            android:id="@+id/temperatureLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15_dp"
-            android:text="@string/temperature_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cityCoordinates" />
-
-        <TextView
-            android:id="@+id/temperatureValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15_dp"
-            android:textSize="@dimen/temperature_value_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureLabel"
-            tools:text="+15" />
-
-        <TextView
-            android:id="@+id/feelsLikeLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15_dp"
-            android:text="@string/feels_like_label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/temperatureValue" />
-
-        <TextView
-            android:id="@+id/feelsLikeValue"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15_dp"
-            android:textSize="@dimen/feels_like_text_size"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/feelsLikeLabel"
-            tools:text="-23" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/loadingLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true">
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/loading_group"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:constraint_referenced_ids="loadingLayout, progress_bar" />
+        android:background="@color/black"
+        android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/progress_bar"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/errorLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:clickable="true"
-        android:focusable="true">
-
-        <androidx.constraintlayout.widget.Group
-            android:id="@+id/error_group"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:constraint_referenced_ids="errorLayout, errorImage, errorImage" />
-
-        <ImageView
-            android:id="@+id/errorImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/error"
-            android:minWidth="100dp"
-            android:minHeight="100dp"
-            android:src="@drawable/ic_baseline_mood_bad_24"
-            app:layout_constraintBottom_toTopOf="@id/errorTextview"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/errorTextview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/error_message"
-            android:textColor="@color/black"
-            android:textSize="@dimen/feels_like_text_size"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/errorImage" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+            android:layout_gravity="center" />
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
