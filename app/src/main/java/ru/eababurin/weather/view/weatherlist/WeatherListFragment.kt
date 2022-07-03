@@ -1,7 +1,6 @@
 package ru.eababurin.weather.view.weatherlist
 
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import ru.eababurin.weather.MainActivity
 import ru.eababurin.weather.R
 import ru.eababurin.weather.databinding.FragmentWeatherListBinding
 import ru.eababurin.weather.domain.Weather
@@ -24,10 +22,10 @@ class WeatherListFragment : Fragment(), OnItemClick {
         fun newInstance() = WeatherListFragment()
     }
 
-    var isRussian = true
+    private var isRussian = true
 
-    lateinit var binding: FragmentWeatherListBinding
-    lateinit var viewModel: WeatherListViewModel
+    private lateinit var binding: FragmentWeatherListBinding
+    private lateinit var viewModel: WeatherListViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -50,7 +48,6 @@ class WeatherListFragment : Fragment(), OnItemClick {
             isRussian = !isRussian
             shownCities()
         }
-
     }
 
     private fun shownCities() {
@@ -79,8 +76,9 @@ class WeatherListFragment : Fragment(), OnItemClick {
                 binding.mainFragmentRecyclerView.adapter =
                     WeatherListAdapter(appState.weatherList, this)
             }
-
-            is AppState.SuccessOne -> { val result = appState.weatherData }
+            is AppState.SuccessOne -> {
+                val result = appState.weatherData
+            }
         }
     }
 

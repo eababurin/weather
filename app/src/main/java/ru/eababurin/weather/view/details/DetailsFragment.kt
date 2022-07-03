@@ -10,7 +10,6 @@ import ru.eababurin.weather.domain.Weather
 
 class DetailsFragment : Fragment() {
 
-
     private var _binding: FragmentDetailsBinding? = null
     private val binding: FragmentDetailsBinding
         get() {
@@ -21,7 +20,6 @@ class DetailsFragment : Fragment() {
         super.onDestroy()
         _binding = null
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,7 +33,6 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val weather=  arguments?.get(BUNDLE_WEATHER_EXTRA)
         val weather = (arguments?.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA))
         if (weather != null) renderData(weather)
     }
@@ -48,7 +45,7 @@ class DetailsFragment : Fragment() {
     }
 
     companion object {
-        const val BUNDLE_WEATHER_EXTRA = "sgrrdfge"
+        const val BUNDLE_WEATHER_EXTRA = "data"
         fun newInstance(weather: Weather): DetailsFragment {
             val bundle = Bundle()
             bundle.putParcelable(BUNDLE_WEATHER_EXTRA, weather)
@@ -57,6 +54,4 @@ class DetailsFragment : Fragment() {
             return fr
         }
     }
-
-
 }

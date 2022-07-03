@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.eababurin.weather.databinding.FragmentWeatherListRecyclerViewBinding
 import ru.eababurin.weather.domain.Weather
-import ru.eababurin.weather.view.details.OnItemClick
 
-class WeatherListAdapter(private val dataList: List<Weather>, private val callback: WeatherListFragment) :
+class WeatherListAdapter(
+    private val dataList: List<Weather>,
+    private val callback: WeatherListFragment
+) :
     RecyclerView.Adapter<WeatherListAdapter.WeatherViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherViewHolder {

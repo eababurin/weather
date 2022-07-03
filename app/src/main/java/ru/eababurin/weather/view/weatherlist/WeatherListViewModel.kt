@@ -2,6 +2,7 @@ package ru.eababurin.weather.view.weatherlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import ru.eababurin.weather.R
 import ru.eababurin.weather.model.*
 import ru.eababurin.weather.viewmodel.AppState
 
@@ -9,8 +10,8 @@ class WeatherListViewModel(
     private val liveData: MutableLiveData<AppState> = MutableLiveData<AppState>()
 ) : ViewModel() {
 
-    lateinit var getMultiWeatherResult: MultiResultWeatherGetable
-    lateinit var getOneWeatherResult: OneResultWeatherGetable
+    private lateinit var getMultiWeatherResult: MultiResultWeatherGetable
+    private lateinit var getOneWeatherResult: OneResultWeatherGetable
 
     fun getLiveData(): MutableLiveData<AppState> {
         choiceRepository()
@@ -34,14 +35,13 @@ class WeatherListViewModel(
         liveData.value = AppState.Loading
         try {
             if ((1..2).random() == 1) {
-                liveData.postValue(AppState.Error(throw IllegalStateException("Что то нехорошее произошло")))
+                liveData.postValue(AppState.Error(throw IllegalStateException(R.string.error_message.toString())))
             } else {
                 liveData.postValue(AppState.SuccessMulti(getMultiWeatherResult.getListWeather(location)))
             }
         } catch (e: IllegalStateException) {
             liveData.postValue(AppState.Error(e))
         }
-
     }
 
     private fun isConnection(): Boolean {
