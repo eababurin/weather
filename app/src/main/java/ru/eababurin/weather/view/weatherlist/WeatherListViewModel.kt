@@ -10,8 +10,8 @@ class WeatherListViewModel(
     private val liveData: MutableLiveData<AppState> = MutableLiveData<AppState>()
 ) : ViewModel() {
 
-    lateinit var repositoryMulti: RepositoryMany
-    lateinit var repositoryOne: RepositoryOne
+    lateinit var getMultiWeatherResult: MultiResultWeatherGetable
+    lateinit var getOneWeatherResult: OneResultWeatherGetable
 
     fun getLiveData(): MutableLiveData<AppState> {
         choiceRepository()
@@ -20,11 +20,11 @@ class WeatherListViewModel(
 
     private fun choiceRepository() {
         if (isConnection()) {
-            repositoryOne = RepositoryRemoteImpl()
+            getOneWeatherResult = RepositoryRemoteImpl()
         } else {
-            repositoryMulti = RepositoryLocalImpl()
+            getMultiWeatherResult = RepositoryLocalImpl()
         }
-        repositoryMulti = RepositoryLocalImpl()
+        getMultiWeatherResult = RepositoryLocalImpl()
     }
 
     fun getWeatherListForRussia() {
@@ -39,7 +39,7 @@ class WeatherListViewModel(
         if (false) { // TODO - FIXME - HW
             liveData.postValue(AppState.Error(throw IllegalStateException("Что-то пошло не так :(")))
         }
-        liveData.postValue(AppState.SuccessMulti(repositoryMulti.getListWeather(location)))
+        liveData.postValue(AppState.SuccessMulti(getMultiWeatherResult.getListWeather(location)))
     }
 
     private fun isConnection(): Boolean {

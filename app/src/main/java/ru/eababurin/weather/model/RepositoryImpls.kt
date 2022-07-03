@@ -4,7 +4,7 @@ import ru.eababurin.weather.domain.Weather
 import ru.eababurin.weather.domain.getRussianCities
 import ru.eababurin.weather.domain.getWorldCities
 
-class RepositoryLocalImpl : RepositoryMany, RepositoryOne {
+class RepositoryLocalImpl : MultiResultWeatherGetable, OneResultWeatherGetable {
     override fun getListWeather(location: Location): List<Weather> {
         return when (location) {
             Location.Russian -> {
@@ -22,7 +22,7 @@ class RepositoryLocalImpl : RepositoryMany, RepositoryOne {
 
 }
 
-class RepositoryRemoteImpl : RepositoryOne {
+class RepositoryRemoteImpl : OneResultWeatherGetable {
 
     override fun getWeather(lat: Double, lon: Double): Weather {
         Thread {
