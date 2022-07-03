@@ -36,25 +36,27 @@ class WeatherListFragment : Fragment(), OnItemClick {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         viewModel = ViewModelProvider(this).get(WeatherListViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner, object : Observer<AppState> {
-            override fun onChanged(t: AppState) {
-                renderData(t)
-            }
-        })
+        viewModel.getLiveData().observe(viewLifecycleOwner) { t -> renderData(t) }
+
+        shownCities()
 
         binding.weatherListFragmentFAB.setOnClickListener {
             isRussian = !isRussian
-
-            if (isRussian) {
-                viewModel.getWeatherListForRussia()
-                binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_russia)
-            } else {
-                viewModel.getWeatherListForWorld()
-                binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_earth)
-            }
+            shownCities()
         }
-        viewModel.getWeatherListForRussia()
+
+    }
+
+    private fun shownCities() {
+        if (isRussian) {
+            viewModel.getWeatherListForRussia()
+            binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_russia)
+        } else {
+            viewModel.getWeatherListForWorld()
+            binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_earth)
+        }
     }
 
     private fun renderData(appState: AppState) {
