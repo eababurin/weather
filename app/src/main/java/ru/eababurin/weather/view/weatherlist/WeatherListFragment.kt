@@ -1,6 +1,5 @@
 package ru.eababurin.weather.view.weatherlist
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import ru.eababurin.weather.R
 import ru.eababurin.weather.databinding.FragmentWeatherListBinding
 import ru.eababurin.weather.domain.Weather
@@ -54,7 +54,7 @@ class WeatherListFragment : Fragment(), OnItemClick {
         if (isRussian) {
             viewModel.getWeatherList(Location.Russian)
             binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_russia)
-        } else {
+           } else {
             viewModel.getWeatherList(Location.World)
             binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_earth)
         }
@@ -63,11 +63,13 @@ class WeatherListFragment : Fragment(), OnItemClick {
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> {
-                AlertDialog.Builder(requireContext())
-                    .setTitle(R.string.alert_title)
-                    .setMessage(R.string.alert_description)
-                    .setPositiveButton(R.string.alert_button) { dialog, pos -> requireActivity().finish() }
-                    .show()
+                binding.root.errorHandling(
+                    "Произошла ошибка при загрузке данных.",
+                    Snackbar.LENGTH_LONG,
+                    " Попробовать снова"
+                ) {
+                    shownCities()
+                }
             }
             AppState.Loading -> {
                 Toast.makeText(requireContext(), R.string.loading_title, Toast.LENGTH_SHORT).show()
@@ -80,6 +82,15 @@ class WeatherListFragment : Fragment(), OnItemClick {
                 val result = appState.weatherData
             }
         }
+    }
+
+    private fun View.errorHandling(
+        message: String,
+        duration: Int,
+        label: String,
+        block: (v: View) -> Unit
+    ) {
+        Snackbar.make(this, message, duration).setAction(label, block).show()
     }
 
     override fun onItemClick(weather: Weather) {
