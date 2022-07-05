@@ -62,17 +62,17 @@ class WeatherListFragment : Fragment(), OnItemClick {
 
     private fun renderData(appState: AppState) {
         when (appState) {
+            AppState.Loading -> {
+                Toast.makeText(requireContext(), R.string.loading_title, Toast.LENGTH_SHORT).show()
+            }
             is AppState.Error -> {
                 binding.root.errorHandling(
                     "Произошла ошибка при загрузке данных.",
-                    Snackbar.LENGTH_LONG,
+                    Snackbar.LENGTH_INDEFINITE,
                     " Попробовать снова"
                 ) {
                     shownCities()
                 }
-            }
-            AppState.Loading -> {
-                Toast.makeText(requireContext(), R.string.loading_title, Toast.LENGTH_SHORT).show()
             }
             is AppState.SuccessMulti -> {
                 binding.mainFragmentRecyclerView.adapter =

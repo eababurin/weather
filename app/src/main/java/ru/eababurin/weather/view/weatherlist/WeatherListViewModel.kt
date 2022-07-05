@@ -42,5 +42,4 @@ class WeatherListViewModel(
     private fun isConnection(): Boolean {
         return false
     }
-
 }
