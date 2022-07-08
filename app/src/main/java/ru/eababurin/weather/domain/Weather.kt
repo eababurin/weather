@@ -8,7 +8,7 @@ import ru.eababurin.weather.domain.getDefaultCity
 @Parcelize
 data class Weather(
     val city: City = getDefaultCity(),
-    val temperature: Int = 35,
-    val feelsLike: Int = 43
+    var temperature: Int = 35,
+    var feelsLike: Int = 43
 ) : Parcelable
 

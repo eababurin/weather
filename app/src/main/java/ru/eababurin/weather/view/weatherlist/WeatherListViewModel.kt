@@ -32,7 +32,8 @@ class WeatherListViewModel(
 
     private fun sentRequest(location: Location) {
         liveData.value = AppState.Loading
-        if ((1..2).random() == 1) {
+//        if ((1..2).random() == 1) {
+        if (false) {
             liveData.postValue(AppState.Error("Произошла ошибка при загрузке данных"))
         } else {
             liveData.postValue(AppState.SuccessMulti(getMultiWeatherResult.getListWeather(location)))

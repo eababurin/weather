@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.eababurin.weather.databinding.FragmentDetailsBinding
 import ru.eababurin.weather.domain.Weather
+import ru.eababurin.weather.model.dto.WeatherDTO
+import ru.eababurin.weather.utils.WeatherLoader
 
 class DetailsFragment : Fragment() {
 
@@ -33,10 +35,29 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val weather = arguments?.let {
-            it.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
+        val weather = arguments?.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
+
+        weather?.let { weatherLocal ->
+
+            WeatherLoader.request(
+                weatherLocal.city.lat,
+                weatherLocal.city.lon
+            ) { weatherDTO ->
+                bindWeatherLocalWithWeatherDTO(weatherLocal, weatherDTO)
+            }
         }
-        if (weather != null) renderData(weather)
+    }
+
+    private fun bindWeatherLocalWithWeatherDTO(
+        weatherLocal: Weather,
+        weatherDTO: WeatherDTO
+    ) {
+        requireActivity().runOnUiThread {
+            renderData(weatherLocal.apply {
+                weatherLocal.feelsLike = weatherDTO.fact.feelsLike
+                weatherLocal.temperature = weatherDTO.fact.temp
+            })
+        }
     }
 
     private fun renderData(weather: Weather) {
