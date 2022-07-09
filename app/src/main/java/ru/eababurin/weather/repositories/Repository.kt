@@ -1,4 +1,4 @@
-package ru.eababurin.weather.model
+package ru.eababurin.weather.repositories
 
 import ru.eababurin.weather.domain.Weather
 

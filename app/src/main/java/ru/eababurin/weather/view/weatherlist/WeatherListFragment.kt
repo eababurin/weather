@@ -11,7 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.eababurin.weather.R
 import ru.eababurin.weather.databinding.FragmentWeatherListBinding
 import ru.eababurin.weather.domain.Weather
-import ru.eababurin.weather.model.Location
+import ru.eababurin.weather.repositories.Location
 import ru.eababurin.weather.view.details.DetailsFragment
 import ru.eababurin.weather.view.details.OnItemClick
 import ru.eababurin.weather.viewmodel.AppState
@@ -40,21 +40,21 @@ class WeatherListFragment : Fragment(), OnItemClick {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(this).get(WeatherListViewModel::class.java)
-        viewModel.getLiveData().observe(viewLifecycleOwner) { t -> renderData(t) }
+        viewModel.getLiveData().observe(viewLifecycleOwner) { renderData(it) }
 
-        shownCities()
+        showListOfCities()
 
         binding.weatherListFragmentFAB.setOnClickListener {
             isRussian = !isRussian
-            shownCities()
+            showListOfCities()
         }
     }
 
-    private fun shownCities() {
+    private fun showListOfCities() {
         if (isRussian) {
             viewModel.getWeatherList(Location.Russian)
             binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_russia)
-           } else {
+        } else {
             viewModel.getWeatherList(Location.World)
             binding.weatherListFragmentFAB.setImageResource(R.drawable.ic_earth)
         }
@@ -63,24 +63,22 @@ class WeatherListFragment : Fragment(), OnItemClick {
     private fun renderData(appState: AppState) {
         when (appState) {
             AppState.Loading -> {
-                Toast.makeText(requireContext(), R.string.loading_title, Toast.LENGTH_SHORT).show()
+//                Toast.makeText(requireContext(), R.string.loading_title, Toast.LENGTH_SHORT).show()
             }
             is AppState.Error -> {
                 binding.root.errorHandling(
-                    "Произошла ошибка при загрузке данных.",
+                    appState.message,
                     Snackbar.LENGTH_INDEFINITE,
                     " Попробовать снова"
                 ) {
-                    shownCities()
+                    showListOfCities()
                 }
             }
             is AppState.SuccessMulti -> {
                 binding.mainFragmentRecyclerView.adapter =
                     WeatherListAdapter(appState.weatherList, this)
             }
-            is AppState.SuccessOne -> {
-                val result = appState.weatherData
-            }
+            is AppState.SuccessOne -> { }
         }
     }
 
