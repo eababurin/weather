@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import ru.eababurin.weather.databinding.FragmentDetailsBinding
 import ru.eababurin.weather.domain.Weather
 import ru.eababurin.weather.model.dto.WeatherDTO
-import ru.eababurin.weather.utils.WeatherLoader
+import ru.eababurin.weather.repositories.RepositoryRemoteImpl
 
 class DetailsFragment : Fragment() {
 
@@ -36,10 +36,10 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val weather = arguments?.getParcelable<Weather>(BUNDLE_WEATHER_EXTRA)
+        val weatherLoader = RepositoryRemoteImpl()
 
         weather?.let { weatherLocal ->
-
-            WeatherLoader.request(
+            weatherLoader.getWeather(
                 weatherLocal.city.lat,
                 weatherLocal.city.lon
             ) { weatherDTO ->

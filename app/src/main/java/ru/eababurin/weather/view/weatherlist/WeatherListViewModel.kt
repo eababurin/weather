@@ -2,7 +2,6 @@ package ru.eababurin.weather.view.weatherlist
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.eababurin.weather.model.*
 import ru.eababurin.weather.repositories.*
 import ru.eababurin.weather.viewmodel.AppState
 

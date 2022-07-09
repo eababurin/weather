@@ -1,6 +1,7 @@
 package ru.eababurin.weather.repositories
 
 import ru.eababurin.weather.domain.Weather
+import ru.eababurin.weather.model.dto.WeatherDTO
 import ru.eababurin.weather.utils.getRussianCities
 import ru.eababurin.weather.utils.getWorldCities
 
@@ -12,7 +13,5 @@ class RepositoryLocalImpl : OneResultWeatherGetable, MultiResultWeatherGetable {
         }
     }
 
-    override fun getWeather(lat: Double, lon: Double): Weather {
-        return Weather()
-    }
+    override fun getWeather(lat: Double, lon: Double, block: (weather: WeatherDTO) -> Unit) { }
 }
